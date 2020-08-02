@@ -5,14 +5,13 @@ const twitterBtn = document.getElementById('twitter');
 const newQuoteBtn = document.getElementById('new-quote');
 const loader = document.getElementById('loader');
 
-// Show Loading
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
 // Hide Loading 
-function complete() {
+function removeLoadingSpinner() {
     // If the loader is hidden, show the quote container and hide the loader
     if (!loader.hidden) {
         quoteContainer.hidden = false;
@@ -22,7 +21,7 @@ function complete() {
 
 // Get Quote from API
 async function getQuote() {
-    loading();
+    showLoadingSpinner();
     // Create proxy api to prevent cors issue
     const proxyUrl = 'https://fast-sands-69392.herokuapp.com/';
     const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
@@ -47,7 +46,7 @@ async function getQuote() {
         // Set quoteText element to quote data returned from json data
         quoteText.innerText = data.quoteText;
         // Stop Loader and show the quote
-        complete();
+        removeLoadingSpinner();
     } catch (error) {
         // Fetch another quote if an error occurs
         getQuote();
